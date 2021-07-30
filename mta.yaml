@@ -1,0 +1,58 @@
+_schema-version: "3.2"
+ID: reactstandalone
+version: 0.0.1
+
+modules:
+- name: reactstandalone-approuter
+  type: approuter.nodejs
+  path: approuter
+  requires:
+  - name: reactstandalone_html_repo_runtime
+  - name: reactstandalone_dest
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+
+- name: reactstandalone_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: reactstandalone_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - ui-content.zip
+      name: ui
+      target-path: resources/
+
+- name: ui
+  type: html5
+  path: ui
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install
+    - npm run build
+    supported-platforms: []
+
+resources:
+- name: reactstandalone_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+
+- name: reactstandalone_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+
+- name: reactstandalone_dest
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite

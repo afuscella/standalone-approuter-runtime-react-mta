@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run react-ui",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/approuter/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/React/index.html"
+      ],
+      "cwd": "${workspaceFolder}/ui/build",
+      "env": {
+        "PORT": "6004",
+        "run.config": "{\"handlerId\":\"html5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/react/ui\"}"
+      },
+      "envFile": "${workspaceFolder}/ui/.env3",
+      "preLaunchTask": "Run react"
+    }
+  ]
+}
